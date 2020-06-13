@@ -3,14 +3,6 @@ import Foundation
 
 extension CTFont {
 
-  //public func
-  // CTFontDescriptor
-  // kCTFontBaselineAdjustAttribute
-
-//  public func baseLine() -> CGFloat {
-//    CGFloat((CTFontCopyAttribute(self, kCTFontBaselineAdjustAttribute) as! NSNumber).doubleValue)
-//  }
-
   public func size() -> CGFloat {
     CTFontGetSize(self)
   }
@@ -64,10 +56,7 @@ extension CTFont {
     return CTFontCreatePathForGlyph(self, glyph, &transform)
   }
 
-//  public func glyphs(for: String) -> [CGGlyph] {
-//    [CGGlyph](unsafeUninitializedCapacity: count) { (bufferPointer, count) in
-//      CTFontGetBoundingRectsForGlyphs(font, orientation, self, bufferPointer.baseAddress!, self.count)
-//      count = self.count
-//    }
-//  }
+  public func glyphCount() -> CFIndex {
+    CTFontGetGlyphCount(self)
+  }
 }

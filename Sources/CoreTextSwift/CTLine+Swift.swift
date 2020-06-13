@@ -4,7 +4,7 @@ import CoreText
 extension CTLine {
 
   public enum LineHeight {
-    case perfect
+    case typographic
     case normal // +20%
   }
 
@@ -25,17 +25,17 @@ extension CTLine {
     return ascent + descent + leading
   }
 
-//  public func lineHeight(_ kind: LineHeight = .perfect) -> CGFloat {
-//    let (ascent, descent, leading) = typographicBounds()
-//
-//    switch kind {
-//      case .perfect:
-//        return ascent + descent + leading
-//      case .normal:
-//        // 1.20 factor does not perfectly gives CoreText value, but this is the factor in general
-//        return floor((ascent + descent + leading) * 1.20)
-//    }
-//  }
+  public func height(_ kind: LineHeight = .typographic) -> CGFloat {
+    let (ascent, descent, leading) = typographicBounds()
+
+    switch kind {
+      case .typographic:
+        return ascent + descent + leading
+      case .normal:
+        // 1.20 factor does not perfectly gives CoreText value, but this is the factor in general
+        return floor((ascent + descent + leading) * 1.20)
+    }
+  }
 
   /// Performs hit testing.
   public func characterIndex(forPosition position: CGPoint) -> CFIndex {
