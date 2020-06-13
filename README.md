@@ -1,0 +1,3 @@
+# CoreTextSwift
+
+Swifty CoreText API
