@@ -1,6 +1,10 @@
 # CoreTextSwift
 
-Swifty CoreText API
+Swifty CoreText API.
+
+CoreText is C API. This library is a set of wrappers and extensions that makes it convenient to work with Swift.
+
+## Example
 
 Draw line in currect graphics context
 
