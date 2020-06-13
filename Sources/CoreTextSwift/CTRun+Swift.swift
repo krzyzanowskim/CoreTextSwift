@@ -76,3 +76,17 @@ extension CTRun {
   }
 }
 
+#if canImport(CoreGraphics)
+extension CTRun {
+
+  public func draw(range: CFRange = CFRange(), in context: CGContext) {
+    CTRunDraw(self, context, range)
+  }
+}
+
+extension CGContext {
+  public func draw(_ run: CTRun) {
+    run.draw(in: self)
+  }
+}
+#endif
