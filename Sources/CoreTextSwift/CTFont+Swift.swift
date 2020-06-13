@@ -60,3 +60,14 @@ extension CTFont {
     CTFontGetGlyphCount(self)
   }
 }
+
+#if canImport(CoreGraphics)
+extension CTFont {
+
+  public func draw(glyphs: [CGGlyph], at positions: [CGPoint], in context: CGContext) {
+    var glyphs = glyphs
+    var positions = positions
+    CTFontDrawGlyphs(self, &glyphs, &positions, glyphs.count, context)
+  }
+}
+#endif

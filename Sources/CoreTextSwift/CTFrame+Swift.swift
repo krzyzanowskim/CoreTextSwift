@@ -32,3 +32,17 @@ extension CTFrame {
   }
 }
 
+#if canImport(CoreGraphics)
+extension CTFrame {
+  public func draw(in context: CGContext) {
+    CTFrameDraw(self, context)
+  }
+}
+
+extension CGContext {
+  public func draw(_ frame: CTFrame) {
+    frame.draw(in: self)
+  }
+}
+#endif
+

@@ -69,3 +69,22 @@ extension CTLine {
     return offsets
   }
 }
+
+#if canImport(CoreGraphics)
+extension CTLine {
+
+  public func imageBounds(in context: CGContext) -> CGRect {
+    CTLineGetImageBounds(self, context)
+  }
+
+  public func draw(in context: CGContext) {
+    CTLineDraw(self, context)
+  }
+}
+
+extension CGContext {
+  public func draw(_ line: CTLine) {
+    line.draw(in: self)
+  }
+}
+#endif

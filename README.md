@@ -2,7 +2,14 @@
 
 Swifty CoreText API
 
-example:
+draw line in currect graphics context
+
+```swift
+let attributedString = NSAttributedString(string: "abcdefgh")
+UIGraphicsGetCurrentContext()?.draw(attributedString.line())
+```
+
+
 
 ```swift
 let attributedString = NSAttributedString(string: "abcdefgh")
