@@ -13,6 +13,7 @@ public struct CTStringAttributeName: Hashable, RawRepresentable, CustomStringCon
   }
 
   @available(OSX, introduced: 10.5, deprecated: 10.11, message: "Use feature type kCharacterShapeType with the appropriate selector")
+  @available(iOS, introduced: 3.2, deprecated: 9.0, message: "Use feature type kCharacterShapeType with the appropriate selector")
   public static let characterShape = CTStringAttributeName(rawValue: kCTCharacterShapeAttributeName as String)!
   public static let font = CTStringAttributeName(rawValue: kCTFontAttributeName as String)!
   public static let kern = CTStringAttributeName(rawValue: kCTKernAttributeName as String)!
