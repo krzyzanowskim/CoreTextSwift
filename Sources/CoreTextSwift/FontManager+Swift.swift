@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Marcin Krzyzanowski on 05/07/2020.
-//
-
 import CoreText
 import Foundation
 
