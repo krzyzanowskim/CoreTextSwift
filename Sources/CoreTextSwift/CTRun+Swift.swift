@@ -7,10 +7,10 @@ extension CTRun {
     CTRunGetGlyphCount(self)
   }
 
-  public func glyphs() -> [CGGlyph] {
+  public func glyphs(range glyphsRange: NSRange = NSRange()) -> [CGGlyph] {
     let runGlyphsCount = self.glyphsCount
     return [CGGlyph](unsafeUninitializedCapacity: runGlyphsCount) { (bufferPointer, count) in
-      CTRunGetGlyphs(self, CFRange(), bufferPointer.baseAddress!)
+      CTRunGetGlyphs(self, CFRange(glyphsRange), bufferPointer.baseAddress!)
       count = runGlyphsCount
     }
   }
@@ -19,35 +19,35 @@ extension CTRun {
     font.advances(of: glyphs())
   }
 
-  public func typographicBounds() -> (ascent: CGFloat, descent: CGFloat, leading: CGFloat) {
+  public func typographicBounds(range: NSRange = NSRange()) -> (ascent: CGFloat, descent: CGFloat, leading: CGFloat) {
     var ascent: CGFloat = 0
     var descent: CGFloat = 0
     var leading: CGFloat = 0
-    CTRunGetTypographicBounds(self, CFRange(), &ascent, &descent, &leading)
+    CTRunGetTypographicBounds(self, CFRange(range), &ascent, &descent, &leading)
     return (ascent: ascent, descent: descent, leading: leading)
   }
 
-  public func baseAdvances() -> [CGSize] {
+  public func baseAdvances(range: NSRange = NSRange()) -> [CGSize] {
     let runGlyphsCount = self.glyphsCount
     return [CGSize](unsafeUninitializedCapacity: runGlyphsCount) { (bufferPointer, count) in
-      CTRunGetBaseAdvancesAndOrigins(self, CFRange(), bufferPointer.baseAddress!, nil)
+      CTRunGetBaseAdvancesAndOrigins(self, CFRange(range), bufferPointer.baseAddress!, nil)
       count = runGlyphsCount
     }
   }
 
-  public func baseOrigins() -> [CGPoint] {
+  public func baseOrigins(range: NSRange = NSRange()) -> [CGPoint] {
     let runGlyphsCount = self.glyphsCount
     return [CGPoint](unsafeUninitializedCapacity: runGlyphsCount) { (bufferPointer, count) in
-      CTRunGetBaseAdvancesAndOrigins(self, CFRange(), nil, bufferPointer.baseAddress!)
+      CTRunGetBaseAdvancesAndOrigins(self, CFRange(range), nil, bufferPointer.baseAddress!)
       count = runGlyphsCount
     }
   }
 
   /// The glyph positions in a run are relative to the origin of the line containing the run.
-  public func glyphPositions() -> [CGPoint] {
+  public func glyphPositions(range: NSRange = NSRange()) -> [CGPoint] {
     let runGlyphsCount = self.glyphsCount
     return [CGPoint](unsafeUninitializedCapacity: runGlyphsCount) { (bufferPointer, count) in
-      CTRunGetPositions(self, CFRange(), bufferPointer.baseAddress!)
+      CTRunGetPositions(self, CFRange(range), bufferPointer.baseAddress!)
       count = runGlyphsCount
     }
   }
@@ -102,8 +102,8 @@ extension CTRun {
 extension CTRun {
 
   /// Draws a complete run or part of one.
-  public func draw(range: CFRange = CFRange(), in context: CGContext) {
-    CTRunDraw(self, context, range)
+  public func draw(range: NSRange = NSRange(), in context: CGContext) {
+    CTRunDraw(self, context, CFRange(range))
   }
 
   /// Returns the text matrix needed to draw this run.

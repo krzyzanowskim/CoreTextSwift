@@ -8,10 +8,13 @@ extension CTFrame {
   }
 
   /// Copies a range of line origins for a frame.
-  public func lineOrigins() -> [CGPoint] {
+  /// - Parameter range: The range of line origins.
+  /// - Returns: Each CGPoint in this array is the origin of the corresponding line in the array of lines returned by lines()
+  ///            relative to the origin of the path's bounding box, which can be obtained from CGPath.boundingBoxOfPath.
+  public func lineOrigins(range: NSRange = NSRange()) -> [CGPoint] {
     let linesCount = lines().count
     return [CGPoint](unsafeUninitializedCapacity: linesCount) { (bufferPointer, count) in
-      CTFrameGetLineOrigins(self, CFRange(), bufferPointer.baseAddress!)
+      CTFrameGetLineOrigins(self, CFRange(range), bufferPointer.baseAddress!)
       count = linesCount
     }
   }
