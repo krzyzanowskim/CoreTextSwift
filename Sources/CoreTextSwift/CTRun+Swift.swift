@@ -74,19 +74,50 @@ extension CTRun {
   public var runDelegate: Any? {
     attributes[.runDelegate]
   }
+
+  /// Returns the run's status.
+  public var status: CTRunStatus {
+    CTRunGetStatus(self)
+  }
+
+  /// String indices stored in the run
+  ///
+  /// The indices are the character indices that originally spawned the glyphs that make up the run.
+  /// They can be used to map the glyphs in the run back to the characters in the backing store.
+  public func stringIndices(in range: NSRange = NSRange()) -> [CFIndex] {
+    let runGlyphsCount = self.glyphsCount
+    return [CFIndex](unsafeUninitializedCapacity: runGlyphsCount) { (bufferPointer, count) in
+      CTRunGetStringIndices(self, CFRange(range), bufferPointer.baseAddress!)
+      count = runGlyphsCount
+    }
+  }
+
+  /// Gets the range of characters that originally spawned the glyphs in the run.
+  public var stringRange: NSRange {
+    NSRange(CTRunGetStringRange(self))
+  }
 }
 
 #if canImport(CoreGraphics)
 extension CTRun {
 
+  /// Draws a complete run or part of one.
   public func draw(range: CFRange = CFRange(), in context: CGContext) {
     CTRunDraw(self, context, range)
+  }
+
+  /// Returns the text matrix needed to draw this run.
+  public var textMatrix: CGAffineTransform {
+    CTRunGetTextMatrix(self)
   }
 }
 
 extension CGContext {
+
+  /// Draws a complete run or part of one.
   public func draw(_ run: CTRun) {
     run.draw(in: self)
   }
+
 }
 #endif

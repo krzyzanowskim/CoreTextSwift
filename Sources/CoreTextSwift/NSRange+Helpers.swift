@@ -5,3 +5,9 @@ extension NSRange {
     self = NSMakeRange(range.location == kCFNotFound ? NSNotFound : range.location, range.length)
   }
 }
+
+extension CFRange {
+  init(_ range: NSRange) {
+    self = CFRangeMake(range.location, range.length)
+  }
+}
