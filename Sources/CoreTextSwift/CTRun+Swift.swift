@@ -52,13 +52,12 @@ extension CTRun {
     }
   }
 
-  public var attributes: [CTStringAttributeName: Any] {
-    (CTRunGetAttributes(self) as NSDictionary as! [String: Any])
-      .reduce([:]) { (partialResult: [CTStringAttributeName: Any], tuple: (key: String, value: Any)) in
+    public var attributes: [NSAttributedString.Key: Any] {
+    let dict = (CTRunGetAttributes(self) as NSDictionary as! [String: Any])
+    return dict.reduce([:]) { (partialResult: [NSAttributedString.Key: Any], tuple: (key: String, value: Any)) in
         var result = partialResult
-        if let attributeName = CTStringAttributeName(rawValue: tuple.key) {
-          result[attributeName] = tuple.value
-        }
+        let attributeName = NSAttributedString.Key(rawValue: tuple.key)
+        result[attributeName] = tuple.value
         return result
     }
   }
